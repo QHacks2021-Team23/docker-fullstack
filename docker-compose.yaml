@@ -14,6 +14,5 @@ services:
     build: frontend
     container_name: "next-js"
     image: essayeditorpro23web:v1
-    ports: ["80:80"]
+    ports: ["3000:80"]
     restart: always
-
