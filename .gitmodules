@@ -1,0 +1,9 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/QHacks2021-Team23/frontend.git
+[submodule "backend"]
+	path = backend
+	url = https://github.com/QHacks2021-Team23/backend.git
+[submodule "mongo"]
+	path = mongo
+	url = https://github.com/QHacks2021-Team23/mongo.git
