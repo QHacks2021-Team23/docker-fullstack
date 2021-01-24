@@ -1,7 +1,10 @@
+version: "2.1"
 services:
   database:
     image: "mongo"
     container_name: "mongo-db"
+    networks:
+      - my-net
     environment:
       - MONGO_INITDB_DATABASE=emailApp
       - MONGO_INITDB_ROOT_USERNAME=root
@@ -10,17 +13,31 @@ services:
       - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./mongo/mongo-volume:/data/db
     ports: ["27017-27019:27017-27019"]
+    environment:
+      FRONTEND_URL: "http://frontend:3000"
   frontend:
     build: frontend
     container_name: "next-js"
+    networks:
+      - my-net
     image: essayeditorpro23web:v1
-    ports: ["3000:3000"]
+    ports: ["3000:3000","587:587"]
     restart: always
+    environment:
+      BACKEND_URL: "http://backend:5000"
+      DATABASE_URL: "mongodb://App:Password!@database:27017/emailApp"
   backend:
     volumes:
       - ./backend/.env.json:/app/.env.json:ro
     build: backend
     container_name: "python"
+    networks:
+      - my-net
     image: essayeditorpro23py:v1
     ports: ["5000:5000"]
     restart: always
+    environment:
+      FRONTEND_URL: "http://frontend:3000"
+networks:
+  my-net:
+    driver: bridge
