@@ -17,6 +17,8 @@ services:
     ports: ["3000:3000"]
     restart: always
   backend:
+    volumes:
+      - ./backend/.env.json:/app/.env.json:ro
     build: backend
     container_name: "python"
     image: essayeditorpro23py:v1
